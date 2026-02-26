@@ -1,8 +1,7 @@
 // File: UseCase1PalindromeCheckerApp.java
 import java.util.Scanner;
-import java.util.Stack;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class UseCase1PalindromeCheckerApp {
 
@@ -11,45 +10,42 @@ public class UseCase1PalindromeCheckerApp {
     public static void main(String[] args) {
         // Display app info
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC6 ");
+        System.out.println(" Palindrome Checker App - UC7 ");
         System.out.println(" Version: " + APP_VERSION);
         System.out.println("======================================\n");
 
-        // UC6: User input palindrome check using Queue + Stack
+        // UC7: User input palindrome check using Deque
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a string to check using Queue + Stack approach: ");
+        System.out.print("Enter a string to check using Deque approach: ");
         String userInput = sc.nextLine();
-        checkPalindromeWithQueueStack(userInput);
+        checkPalindromeWithDeque(userInput);
         sc.close();
     }
 
-    // UC6 method: Queue + Stack based palindrome check
-    public static void checkPalindromeWithQueueStack(String str) {
+    // UC7 method: Deque-based palindrome check
+    public static void checkPalindromeWithDeque(String str) {
         String original = str.toLowerCase();
+        Deque<Character> deque = new LinkedList<>();
 
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
-
-        // Add characters to both queue and stack
+        // Add all characters to the deque
         for (char c : original.toCharArray()) {
-            queue.add(c);  // FIFO
-            stack.push(c); // LIFO
+            deque.addLast(c);
         }
 
         boolean isPalindrome = true;
 
-        // Compare queue (FIFO) vs stack (LIFO)
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) {
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
                 isPalindrome = false;
                 break;
             }
         }
 
         if (isPalindrome) {
-            System.out.println("UC6 Result: \"" + str + "\" is a palindrome.");
+            System.out.println("UC7 Result: \"" + str + "\" is a palindrome.");
         } else {
-            System.out.println("UC6 Result: \"" + str + "\" is NOT a palindrome.");
+            System.out.println("UC7 Result: \"" + str + "\" is NOT a palindrome.");
         }
     }
 }
