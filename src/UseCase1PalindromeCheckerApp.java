@@ -1,5 +1,6 @@
 // File: UseCase1PalindromeCheckerApp.java
 import java.util.Scanner;
+import java.util.Stack;
 
 public class UseCase1PalindromeCheckerApp {
 
@@ -8,38 +9,39 @@ public class UseCase1PalindromeCheckerApp {
     public static void main(String[] args) {
         // Display app info
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC4 ");
+        System.out.println(" Palindrome Checker App - UC5 ");
         System.out.println(" Version: " + APP_VERSION);
         System.out.println("======================================\n");
 
-        // UC4: User input palindrome check using char array and two-pointer technique
+        // UC5: User input palindrome check using Stack
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a string to check with char array approach: ");
-        String uc4Input = sc.nextLine();
-        checkPalindromeWithCharArray(uc4Input);
+        System.out.print("Enter a string to check using stack approach: ");
+        String userInput = sc.nextLine();
+        checkPalindromeWithStack(userInput);
         sc.close();
     }
 
-    // UC4 method: Two-pointer char array approach
-    public static void checkPalindromeWithCharArray(String str) {
-        char[] chars = str.toCharArray();
-        int start = 0;
-        int end = chars.length - 1;
-        boolean isPalindrome = true;
+    // UC5 method: Stack-based palindrome check
+    public static void checkPalindromeWithStack(String str) {
+        Stack<Character> stack = new Stack<>();
+        String original = str.toLowerCase();
+        StringBuilder reversed = new StringBuilder();
 
-        while (start < end) {
-            if (Character.toLowerCase(chars[start]) != Character.toLowerCase(chars[end])) {
-                isPalindrome = false;
-                break;
-            }
-            start++;
-            end--;
+        // Push all characters into the stack
+        for (char c : original.toCharArray()) {
+            stack.push(c);
         }
 
-        if (isPalindrome) {
-            System.out.println("UC4 Result: \"" + str + "\" is a palindrome.");
+        // Pop characters to get reversed string
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
+
+        // Compare original and reversed
+        if (original.equals(reversed.toString())) {
+            System.out.println("UC5 Result: \"" + str + "\" is a palindrome.");
         } else {
-            System.out.println("UC4 Result: \"" + str + "\" is NOT a palindrome.");
+            System.out.println("UC5 Result: \"" + str + "\" is NOT a palindrome.");
         }
     }
 }
