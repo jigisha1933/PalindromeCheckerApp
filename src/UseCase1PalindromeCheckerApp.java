@@ -1,6 +1,8 @@
 // File: UseCase1PalindromeCheckerApp.java
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class UseCase1PalindromeCheckerApp {
 
@@ -9,39 +11,45 @@ public class UseCase1PalindromeCheckerApp {
     public static void main(String[] args) {
         // Display app info
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC5 ");
+        System.out.println(" Palindrome Checker App - UC6 ");
         System.out.println(" Version: " + APP_VERSION);
         System.out.println("======================================\n");
 
-        // UC5: User input palindrome check using Stack
+        // UC6: User input palindrome check using Queue + Stack
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter a string to check using stack approach: ");
+        System.out.print("Enter a string to check using Queue + Stack approach: ");
         String userInput = sc.nextLine();
-        checkPalindromeWithStack(userInput);
+        checkPalindromeWithQueueStack(userInput);
         sc.close();
     }
 
-    // UC5 method: Stack-based palindrome check
-    public static void checkPalindromeWithStack(String str) {
-        Stack<Character> stack = new Stack<>();
+    // UC6 method: Queue + Stack based palindrome check
+    public static void checkPalindromeWithQueueStack(String str) {
         String original = str.toLowerCase();
-        StringBuilder reversed = new StringBuilder();
 
-        // Push all characters into the stack
+        Queue<Character> queue = new LinkedList<>();
+        Stack<Character> stack = new Stack<>();
+
+        // Add characters to both queue and stack
         for (char c : original.toCharArray()) {
-            stack.push(c);
+            queue.add(c);  // FIFO
+            stack.push(c); // LIFO
         }
 
-        // Pop characters to get reversed string
-        while (!stack.isEmpty()) {
-            reversed.append(stack.pop());
+        boolean isPalindrome = true;
+
+        // Compare queue (FIFO) vs stack (LIFO)
+        while (!queue.isEmpty() && !stack.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
+                isPalindrome = false;
+                break;
+            }
         }
 
-        // Compare original and reversed
-        if (original.equals(reversed.toString())) {
-            System.out.println("UC5 Result: \"" + str + "\" is a palindrome.");
+        if (isPalindrome) {
+            System.out.println("UC6 Result: \"" + str + "\" is a palindrome.");
         } else {
-            System.out.println("UC5 Result: \"" + str + "\" is NOT a palindrome.");
+            System.out.println("UC6 Result: \"" + str + "\" is NOT a palindrome.");
         }
     }
 }
