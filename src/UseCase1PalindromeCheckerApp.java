@@ -1,29 +1,42 @@
 public class UseCase1PalindromeCheckerApp {
 
-    // Recursive method to check palindrome
-    private static boolean isPalindromeRecursive(String str, int start, int end) {
-        if (start >= end) return true;  // Base case
-        if (str.charAt(start) != str.charAt(end)) return false;
-        return isPalindromeRecursive(str, start + 1, end - 1);
+    // Method to check palindrome ignoring case and spaces
+    private static boolean isPalindromeIgnoreCaseAndSpace(String str) {
+        // Normalize string: remove spaces and convert to lower case
+        String normalized = str.replaceAll("\\s+", "").toLowerCase();
+
+        // Use two-pointer approach
+        int left = 0;
+        int right = normalized.length() - 1;
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+
+        return true;
     }
 
     public static void main(String[] args) {
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC9 ");
+        System.out.println(" Palindrome Checker App - UC10 ");
         System.out.println(" Version: 1.0");
         System.out.println("======================================\n");
 
         // Hardcoded string
-        String word = "racecar";
+        String word = "A man a plan a canal Panama";
 
-        // Check palindrome using recursion
-        boolean result = isPalindromeRecursive(word, 0, word.length() - 1);
+        // Check palindrome ignoring spaces and case
+        boolean result = isPalindromeIgnoreCaseAndSpace(word);
 
         // Print result
         if (result) {
-            System.out.println("UC9 Result: \"" + word + "\" is a palindrome.");
+            System.out.println("UC10 Result: \"" + word + "\" is a palindrome (case & space ignored).");
         } else {
-            System.out.println("UC9 Result: \"" + word + "\" is NOT a palindrome.");
+            System.out.println("UC10 Result: \"" + word + "\" is NOT a palindrome (case & space ignored).");
         }
     }
 }
