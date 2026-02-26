@@ -8,43 +8,38 @@ public class UseCase1PalindromeCheckerApp {
     public static void main(String[] args) {
         // Display app info
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App ");
+        System.out.println(" Palindrome Checker App - UC4 ");
         System.out.println(" Version: " + APP_VERSION);
         System.out.println("======================================\n");
 
-        // UC2: Hardcoded palindrome check
-        String hardcodedString = "madam";
-        checkHardcodedPalindrome(hardcodedString);
-
-        // UC3: User input palindrome check using loop
+        // UC4: User input palindrome check using char array and two-pointer technique
         Scanner sc = new Scanner(System.in);
-        System.out.print("\nUC3: Enter a string to check if it's a palindrome: ");
-        String userInput = sc.nextLine();
-        checkPalindromeWithLoop(userInput);
+        System.out.print("Enter a string to check with char array approach: ");
+        String uc4Input = sc.nextLine();
+        checkPalindromeWithCharArray(uc4Input);
         sc.close();
     }
 
-    // UC2 method: Using StringBuilder.reverse()
-    public static void checkHardcodedPalindrome(String str) {
-        String reversed = new StringBuilder(str).reverse().toString();
-        if (str.equalsIgnoreCase(reversed)) {
-            System.out.println("UC2 Result: \"" + str + "\" is a palindrome.");
-        } else {
-            System.out.println("UC2 Result: \"" + str + "\" is NOT a palindrome.");
-        }
-    }
+    // UC4 method: Two-pointer char array approach
+    public static void checkPalindromeWithCharArray(String str) {
+        char[] chars = str.toCharArray();
+        int start = 0;
+        int end = chars.length - 1;
+        boolean isPalindrome = true;
 
-    // UC3 method: Reverse using loop
-    public static void checkPalindromeWithLoop(String str) {
-        String reversed = "";
-        for (int i = str.length() - 1; i >= 0; i--) {
-            reversed += str.charAt(i);
+        while (start < end) {
+            if (Character.toLowerCase(chars[start]) != Character.toLowerCase(chars[end])) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
         }
 
-        if (str.equalsIgnoreCase(reversed)) {
-            System.out.println("UC3 Result: \"" + str + "\" is a palindrome.");
+        if (isPalindrome) {
+            System.out.println("UC4 Result: \"" + str + "\" is a palindrome.");
         } else {
-            System.out.println("UC3 Result: \"" + str + "\" is NOT a palindrome.");
+            System.out.println("UC4 Result: \"" + str + "\" is NOT a palindrome.");
         }
     }
 }
