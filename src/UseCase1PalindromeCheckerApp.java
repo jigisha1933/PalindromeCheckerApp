@@ -1,51 +1,71 @@
+import java.util.*;
+
 public class UseCase1PalindromeCheckerApp {
 
-    // Palindrome service class
-    static class PalindromeChecker {
-        private String word;
+    // Palindrome strategy interface
+    interface PalindromeStrategy {
+        boolean isPalindrome(String word);
+    }
 
-        // Constructor
-        public PalindromeChecker(String word) {
-            this.word = word;
+    // Stack-based strategy
+    static class StackStrategy implements PalindromeStrategy {
+        @Override
+        public boolean isPalindrome(String word) {
+            Stack<Character> stack = new Stack<>();
+            for (char c : word.toCharArray()) stack.push(c);
+            for (char c : word.toCharArray()) {
+                if (c != stack.pop()) return false;
+            }
+            return true;
+        }
+    }
+
+    // Deque-based strategy
+    static class DequeStrategy implements PalindromeStrategy {
+        @Override
+        public boolean isPalindrome(String word) {
+            Deque<Character> deque = new ArrayDeque<>();
+            for (char c : word.toCharArray()) deque.add(c);
+            while (deque.size() > 1) {
+                if (!deque.removeFirst().equals(deque.removeLast())) return false;
+            }
+            return true;
+        }
+    }
+
+    // Context class to use strategy
+    static class PalindromeChecker {
+        private PalindromeStrategy strategy;
+
+        public PalindromeChecker(PalindromeStrategy strategy) {
+            this.strategy = strategy;
         }
 
-        // Method to check palindrome using stack
-        public boolean checkPalindrome() {
-            java.util.Stack<Character> stack = new java.util.Stack<>();
-            for (char c : word.toCharArray()) {
-                stack.push(c);
-            }
+        public boolean check(String word) {
+            return strategy.isPalindrome(word);
+        }
 
-            for (char c : word.toCharArray()) {
-                if (c != stack.pop()) {
-                    return false;
-                }
-            }
-
-            return true;
+        public void setStrategy(PalindromeStrategy strategy) {
+            this.strategy = strategy;
         }
     }
 
     public static void main(String[] args) {
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC11 ");
+        System.out.println(" Palindrome Checker App - UC12 ");
         System.out.println(" Version: 1.0");
         System.out.println("======================================\n");
 
-        // Hardcoded string
-        String word = "radar";
+        String word = "level";
 
-        // Create PalindromeChecker object
-        PalindromeChecker checker = new PalindromeChecker(word);
+        // Choose strategy dynamically
+        PalindromeChecker checker = new PalindromeChecker(new StackStrategy());
+        boolean resultStack = checker.check(word);
 
-        // Check palindrome
-        boolean result = checker.checkPalindrome();
+        checker.setStrategy(new DequeStrategy());
+        boolean resultDeque = checker.check(word);
 
-        // Print result
-        if (result) {
-            System.out.println("UC11 Result: \"" + word + "\" is a palindrome (OOP approach).");
-        } else {
-            System.out.println("UC11 Result: \"" + word + "\" is NOT a palindrome (OOP approach).");
-        }
+        System.out.println("UC12 Result using StackStrategy: " + (resultStack ? "Palindrome" : "Not Palindrome"));
+        System.out.println("UC12 Result using DequeStrategy: " + (resultDeque ? "Palindrome" : "Not Palindrome"));
     }
 }
