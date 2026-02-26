@@ -1,34 +1,29 @@
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 
 public class UseCase1PalindromeCheckerApp {
 
     public static void main(String[] args) {
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC6 ");
+        System.out.println(" Palindrome Checker App - UC7 ");
         System.out.println(" Version: 1.0");
         System.out.println("======================================\n");
 
-        // Hardcoded string to check
-        String word = "radar";
+        // Hardcoded string
+        String word = "deified";
 
-        // Queue for FIFO
-        Queue<Character> queue = new LinkedList<>();
-        // Stack for LIFO
-        Stack<Character> stack = new Stack<>();
+        // Create a deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Add characters to queue and stack
+        // Add characters to deque
         for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            queue.add(ch);  // Enqueue
-            stack.push(ch); // Push
+            deque.addLast(word.charAt(i));
         }
 
-        // Compare queue and stack
+        // Two-pointer comparison using deque
         boolean isPalindrome = true;
-        while (!queue.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) {
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
                 isPalindrome = false;
                 break;
             }
@@ -36,9 +31,9 @@ public class UseCase1PalindromeCheckerApp {
 
         // Print result
         if (isPalindrome) {
-            System.out.println("UC6 Result: \"" + word + "\" is a palindrome.");
+            System.out.println("UC7 Result: \"" + word + "\" is a palindrome.");
         } else {
-            System.out.println("UC6 Result: \"" + word + "\" is NOT a palindrome.");
+            System.out.println("UC7 Result: \"" + word + "\" is NOT a palindrome.");
         }
     }
 }
