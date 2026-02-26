@@ -1,36 +1,35 @@
+import java.util.Stack;
+
 public class UseCase1PalindromeCheckerApp {
 
     public static void main(String[] args) {
         System.out.println("======================================");
-        System.out.println(" Palindrome Checker App - UC4 ");
+        System.out.println(" Palindrome Checker App - UC5 ");
         System.out.println(" Version: 1.0");
         System.out.println("======================================\n");
 
         // Hardcoded string to check
-        String word = "mom";
+        String word = "level";
 
-        // Convert string to char array
-        char[] chars = word.toCharArray();
+        // Create a stack
+        Stack<Character> stack = new Stack<>();
 
-        // Two-pointer approach
-        int start = 0;
-        int end = chars.length - 1;
-        boolean isPalindrome = true;
-
-        while (start < end) {
-            if (chars[start] != chars[end]) {
-                isPalindrome = false;
-                break;
-            }
-            start++;
-            end--;
+        // Push all characters into stack
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
         }
 
-        // Print result
-        if (isPalindrome) {
-            System.out.println("UC4 Result: \"" + word + "\" is a palindrome.");
+        // Pop characters to build reversed string
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+
+        // Check if palindrome
+        if (word.equals(reversed)) {
+            System.out.println("UC5 Result: \"" + word + "\" is a palindrome.");
         } else {
-            System.out.println("UC4 Result: \"" + word + "\" is NOT a palindrome.");
+            System.out.println("UC5 Result: \"" + word + "\" is NOT a palindrome.");
         }
     }
 }
